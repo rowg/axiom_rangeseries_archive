@@ -14,6 +14,7 @@ HOW TO USE IT
 Host axiom
 Hostname data.axds.co
 IdentityFile /Users/codar/.ssh/id_axiom
+StrictHostKeyChecking accept-new
 User hfr_xxxx
 ```
 
