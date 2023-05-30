@@ -26,7 +26,19 @@
 # -T  --temp-dir=DIR          create temporary files in directory DIR
 #
 # Brian Emery 24 Oct 2022 from other scripts
-#
+#             30 May 2023 including file locking code
+
+# Create a lock file 
+LOCK_FILE="/tmp/axiom-sync.lock"
+
+# Check if the lock file exists
+if [ -f "$LOCK_FILE" ]; then
+    echo "Another instance of the script is already running. Exiting."
+    exit 1
+fi
+
+# make the lock file then
+echo $$ > "$LOCK_FILE"
 
 # get the site name for the remote - force upper case
 site_code=$(head -1 /Codar/SeaSonde/Configs/RadialConfigs/Header.txt | awk '{print $2}' | tr '[a-z]' '[A-Z]')
@@ -41,4 +53,6 @@ rsync -tuvzPr --chmod=ugo=rwx --delete /Codar/SeaSonde/Data/RangeSeries/ axiom:"
  
 # Config Files
 rsync -tuvzPr --chmod=ugo=rwx --delete /Codar/SeaSonde/Configs/RadialConfigs/ axiom:"$site_code"/RadialConfigs/ >> "$rsync_log" 2>> "$rsync_log"
-                                                                                                                                                                           
+
+# Remove the lock file
+rm /tmp/axiom-sync.lock                                                                                                                                                                          
