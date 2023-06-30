@@ -20,7 +20,18 @@ User hfr_xxxx
 
 - download it and cd to the unzipped directory
 
+- ...
 
+- add to the site crontab
+
+```
+# Push to Axiom Data Sciences Archive
+# (this is every hour at 4 minutes after the hour)
+4 * * * * /Codar/SeaSonde/Apps/Scripts/rsync_to_axiom.bash
+
+# try to delete lock file once per day just incase
+30 23 * * * rm /tmp/axiom-sync.lock
+```
 
 TO DO
 
