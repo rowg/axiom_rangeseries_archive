@@ -5,11 +5,9 @@ v1.0
 Tools for pushing oceanographic HF radar data from remote sites to the
 Axiom Data Science Archive. 
 
-- What is here
-
 HOW TO USE IT
 
-- create an entry in ssh config:
+create an entry in ssh config:
 ```
 Host axiom
 Hostname data.axds.co
@@ -18,11 +16,11 @@ StrictHostKeyChecking accept-new
 User hfr_xxxx
 ```
 
-- download it and cd to the unzipped directory
+download it and cd to the unzipped directory
 
-- ...
+...
 
-- add to the site crontab
+add to the site crontab
 
 ```
 # Push to Axiom Data Sciences Archive
