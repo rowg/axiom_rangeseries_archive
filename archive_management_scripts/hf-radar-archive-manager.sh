@@ -9,7 +9,8 @@ ARCHIVE_DIR=${ARCHIVE_DIR:-./archive}
 
 DRY_RUN=0
 WATCH=0
-while getopts ":a:no:s:w" opt; do
+RESCAN_WAIT_SECONDS=0
+while getopts ":a:no:r:s:w" opt; do
   case ${opt} in
     a )
       ARCHIVE_DIR="$OPTARG"
@@ -19,6 +20,9 @@ while getopts ":a:no:s:w" opt; do
       ;;
     o )
       OPERATOR="$OPTARG"
+      ;;
+    r )
+      RESCAN_WAIT_SECONDS="$OPTARG"
       ;;
     w )
       WATCH=1
@@ -169,20 +173,30 @@ if [ "$WATCH" -eq "1" ]; then
     fi
   done
 else
-  #Scan the source dir for all matching files
-  check_command rsync
-  find "$SOURCE_DIR" -mindepth 1 -maxdepth 1 -type d -print0 | sort -z | while read -d $'\0' site_dir; do
-    echo $site_dir
-    SITE=$(basename "$site_dir" | tr '[:lower:]' '[:upper:]')
-    SITE_ARCHIVE_DIR="$(site_archive_dir $SITE)"
+  while true; do
+    #Scan the source dir for all matching files
+    check_command rsync
+    find "$SOURCE_DIR" -mindepth 1 -maxdepth 1 -type d -print0 | sort -z | while read -d $'\0' site_dir; do
+      echo $site_dir
+      SITE=$(basename "$site_dir" | tr '[:lower:]' '[:upper:]')
+      SITE_ARCHIVE_DIR="$(site_archive_dir $SITE)"
 
-    #organize range series files
-    DATE_OFFSET=$(filename_date_offset $SITE)
-    find $site_dir -type f -iname "Rng_$SITE_*" -print0 | sort -z | while read -d $'\0' file; do
-      organize_range_series_file "$file" "$SITE_ARCHIVE_DIR" $DATE_OFFSET
+      #organize range series files
+      DATE_OFFSET=$(filename_date_offset $SITE)
+      find $site_dir -type f -iname "Rng_$SITE_*" -print0 | sort -z | while read -d $'\0' file; do
+        organize_range_series_file "$file" "$SITE_ARCHIVE_DIR" $DATE_OFFSET
+      done
+
+      #snapshot configs
+      snapshot_configs "$site_dir" "$SITE_ARCHIVE_DIR"
     done
 
-    #snapshot configs
-    snapshot_configs "$site_dir" "$SITE_ARCHIVE_DIR"
+    #exit or sleep specified seconds and scan again
+    if [ "$RESCAN_WAIT_SECONDS" == "0" ]; then
+       break
+    else
+       echo "Sleeping $RESCAN_WAIT_SECONDS seconds"
+       sleep $RESCAN_WAIT_SECONDS
+    fi
   done
 fi

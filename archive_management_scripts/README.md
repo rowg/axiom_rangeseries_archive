@@ -20,6 +20,7 @@ Flags:
   (i.e. not including operator or site subdirectories)
 * `-n`: Dry run, output messages but do not actually process data
 * `-o`: Operator name (e.g. `UCSB`)
+* `-r`: In process mode, wait x seconds between scans
 * `-w`: Watch source directory for new range series files and process them
 
 Non-watch mode, process all ranges series and configs found:
@@ -27,6 +28,13 @@ Non-watch mode, process all ranges series and configs found:
 ```bash
 ./hf-radar-archive-manager.sh -o UCSB -a /path/to/archive
   /path/to/incoming/data
+```
+
+Usually you want to run this every x seconds to pick up config changes (supply `-r` flag)
+
+```bash
+./hf-radar-archiver.sh -o UCSB -a /media/data/hfradar/archive
+  -r 900 /media/data/rssh/hfr_ucsb
 ```
 
 Watch mode, monitor source directory for new or updated range series files (`*.rs`).
