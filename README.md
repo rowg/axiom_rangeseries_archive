@@ -58,10 +58,11 @@ User hfr_xxxx
 OTHER CODE
 
 ```propagation_script.bash``` can be used to push ```rsync_to_axiom.bash``` to a list 
-of SeaSonde sites. 
+of SeaSonde sites. The default is to copy the ssh key, the config, and to modify the 
+crontab. Use with caution. 
 
-```axiom_permission_setup.bash``` can be used to change permissions in the site folders 
-on the Axiom server.
+```axiom_permission_setup.bash``` can be used to creates the receiver directory and
+change its permission on the Axiom server for each radar site.
 
 
 NOTES
