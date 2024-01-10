@@ -3,8 +3,8 @@
 v1.0
 
 Tools for pushing oceanographic HF radar data from remote sites to the
-Axiom Data Science Archive, along with code that Axiom uses to manage the 
-archive. 
+Axiom Data Science Archive, located at http://ioos-hfradar.axds.co/pages/inventory/
+Code for that Axiom uses to manage the archive is also here. 
 
 
 
