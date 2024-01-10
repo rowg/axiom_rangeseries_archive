@@ -1,7 +1,9 @@
 #!/bin/bash
 # PROPAGATION SCRIPT
 #
-# Copy keys, etc to remote sites
+# Copy keys, etc to remote sites. Note that after the
+# keys are installed, you'll have to manually answer
+# yes to the authorized keys question
 #
 # Brian Emery 10 Jan 2024 from other scripts
 
@@ -14,6 +16,24 @@ scp rsync_to_axiom.bash "$1":/Codar/SeaSonde/Apps/Scripts/
 
 # set file permissions
 ssh "$1" chmod 777 /Codar/SeaSonde/Apps/Scripts/rsync_to_axiom.bash
+
+# copy config file
+scp config "$1":~/.ssh/
+
+# copy site private key
+scp id_axiom "$1":~/.ssh/
+
+# set file permissions
+ssh "$1" chmod 600 /Users/codar/.ssh/id_axiom
+
+# ADD RSYNC TO CRONTAB
+# use with caution!
+ssh "$1" 'crontab -l > ~/old_crontab'
+ssh "$1" 'cp ~/old_crontab ~/new_crontab'
+ssh "$1" 'echo "4 * * * * /Codar/SeaSonde/Apps/Scripts/rsync_to_axiom.bash" >> ~/new_crontab'
+ssh "$1" 'echo "30 23 * * * rm /tmp/axiom-sync.lock" >> ~/new_crontab'
+ssh "$1" 'crontab ~/new_crontab'
+
 
 }
 #-----------------------------------------------------------------------
