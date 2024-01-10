@@ -6,10 +6,6 @@ Tools for pushing oceanographic HF radar data from remote sites to the
 Axiom Data Science Archive, along with code that Axiom uses to manage the 
 archive. 
 
-The folder ```archive_management_scripts``` contains code used by Axiom 
-on their servers for managing the RNG archive. If you are a HF radar
-operator you can safely ignore this!
-
 
 HOW TO USE THIS CODE TO PUSH RNG FILES TO AXIOM
 
@@ -44,8 +40,14 @@ User hfr_xxxx
 # try to delete lock file once per day just in case
 30 23 * * * rm /tmp/axiom-sync.lock
 ```
-NOTE
-CODAR officially suggests not using crontab, and instead using ```launchd```
+
+NOTES
+
+1) The folder ```archive_management_scripts``` contains code used by Axiom 
+on their servers for managing the RNG archive. If you are a HF radar
+operator you can safely ignore this folder and the code in it!
+
+2) CODAR officially suggests not using crontab, and instead using ```launchd```
 
 ACKNOWLEDGMENT
 
