@@ -3,8 +3,8 @@
 v1.0
 
 Tools for pushing oceanographic HF radar data from remote sites to the
-Axiom Data Science Archive, along with code that Axiom uses to manage the 
-archive. 
+Axiom Data Science Archive, located at http://ioos-hfradar.axds.co/pages/inventory/
+Code for that Axiom uses to manage the archive is also here. 
 
 
 
@@ -57,10 +57,10 @@ User hfr_xxxx
 
 OTHER CODE
 
-# ```propagation_script.bash``` can be used to push ```rsync_to_axiom.bash``` to a list 
+```propagation_script.bash``` can be used to push ```rsync_to_axiom.bash``` to a list 
 of SeaSonde sites. 
 
-# ```axiom_permission_setup.bash``` can be used to change permissions in the site folders 
+```axiom_permission_setup.bash``` can be used to change permissions in the site folders 
 on the Axiom server.
 
 
