@@ -57,10 +57,10 @@ User hfr_xxxx
 
 OTHER CODE
 
-# ```propagation_script.bash``` can be used to push ```rsync_to_axiom.bash``` to a list 
+```propagation_script.bash``` can be used to push ```rsync_to_axiom.bash``` to a list 
 of SeaSonde sites. 
 
-# ```axiom_permission_setup.bash``` can be used to change permissions in the site folders 
+```axiom_permission_setup.bash``` can be used to change permissions in the site folders 
 on the Axiom server.
 
 
