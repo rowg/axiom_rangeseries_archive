@@ -6,12 +6,18 @@ Tools for pushing oceanographic HF radar data from remote sites to the
 Axiom Data Science Archive, along with code that Axiom uses to manage the 
 archive. 
 
+
+
 OVERVIEW
 
 The script ```rsync_to_axiom.bash``` is designed to work on SeaSonde sites
 without modifications. In order to do this it uses the site code which it 
 retrieves from the Header.txt file, and inserts that into the rsync destination
-directory (on Axiom's server). 
+directory (on Axiom's server). (The folder ```archive_management_scripts``` 
+contains code used by Axiom on their servers for managing the RNG archive. 
+If you are a HF radaroperator you can safely ignore this folder and the code 
+in it!). 
+
 
 
 HOW TO USE THIS CODE TO PUSH RNG FILES TO AXIOM
@@ -48,15 +54,16 @@ User hfr_xxxx
 30 23 * * * rm /tmp/axiom-sync.lock
 ```
 
+
 NOTES
 
-1) The folder ```archive_management_scripts``` contains code used by Axiom 
-on their servers for managing the RNG archive. If you are a HF radar
-operator you can safely ignore this folder and the code in it!
+CODAR officially suggests not using crontab, and instead using ```launchd```
 
-2) CODAR officially suggests not using crontab, and instead using ```launchd```
+
 
 ACKNOWLEDGMENT
+
+
 
 VERSION NOTES
 
