@@ -15,7 +15,7 @@ without modifications. In order to do this it uses the site code which it
 retrieves from the Header.txt file, and inserts that into the rsync destination
 directory (on Axiom's server). (The folder ```archive_management_scripts``` 
 contains code used by Axiom on their servers for managing the RNG archive. 
-If you are a HF radaroperator you can safely ignore this folder and the code 
+If you are a HF radar operator you can safely ignore this folder and the code 
 in it!). 
 
 
@@ -61,7 +61,7 @@ OTHER CODE
 of SeaSonde sites. The default is to copy the ssh key, the config, and to modify the 
 crontab. Use with caution. 
 
-```axiom_permission_setup.bash``` can be used to creates the receiver directory and
+```axiom_permission_setup.bash``` can be used to create the receiver directory and
 change its permission on the Axiom server for each radar site.
 
 
