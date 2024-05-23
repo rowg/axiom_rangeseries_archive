@@ -3,6 +3,8 @@
 Bash script (run at the archive/Axiom) to organizing incoming HF radar files from site operators.
 Leverages rsync and inotifywait.
 
+## SITE OPERATORS DO NOT NEED TO RUN OR INSTALL THIS SCRIPT ##
+
 In non-watching mode, all detected range series files are processed
 (copied to the target archive date directory if they don't already exist),
 and then Configs/RadialConfigs files are snapshotted if there are differences
