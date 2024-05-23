@@ -1,79 +1,40 @@
 ## Scripts for Archiving HF Radar Data with Axiom Data Science  ##
 
-v1.0
-
-Tools for pushing oceanographic HF radar data from remote sites to the
+Tools for pushing CODAR SeaSonde produced oceanographic HF radar data from remote sites to the
 Axiom Data Science Archive, located at http://ioos-hfradar.axds.co/pages/inventory/.
-Code for that Axiom uses to manage the archive is also here. 
+Data is synced using `rsync`, which is widely available in Mac and Linux environments.
 
+Reference code that Axiom uses internally to manage the archive is also
+available in the `archive_management_scripts` directory. Note that data
+providers do __not__ need to run or install the scripts in `archive_management_scripts`!
 
+## Setup ##
+#### or, How to set up a SeaConde site computer to push range series data to the archive ####
 
-OVERVIEW
+* Communicate with the range series archive manager at Axiom to determine your sync SSH username
+* Download `bootstrap-range-series-archival.sh` from this repository (using a browser, or a
+  command line tool like `curl -sL "https://github.com/rowg/axiom_rangeseries_archive/blob/master/README.md" > $HOME/Downloads/bootstrap-range-series-archival.sh`)
+* Open a terminal and run the script using `bash` (example `bash $HOME/Downloads/bootstrap-range-series-archival.sh`)
+* Enter your SSH username determined in the first step when prompted
+* When the script completes, send the displayed public key to the Axiom range series archive manager (safe to send via email)
+* Add the displayed cron job to your crontab (`crontab -e` to open in an editor)
 
-The script ```rsync_to_axiom.bash``` is designed to work on SeaSonde sites
-without modifications. In order to do this it uses the site code which it 
-retrieves from the Header.txt file, and inserts that into the rsync destination
-directory (on Axiom's server). (The folder ```archive_management_scripts``` 
-contains code used by Axiom on their servers for managing the RNG archive. 
-If you are a HF radar operator you can safely ignore this folder and the code 
-in it!). 
+That's it! Your site computer should now be set up to send range series and config data
+from the standard CODAR directories to the range series archive at Axiom.
 
+The script creates a directory at `$HOME/range-series-archival` to manage the generated sync script (`range-series-sync.sh`)
+and sync logs (`sync.log`). To uninstall, simply delete this directory and remove any associated cron tasks from your crontab.
 
-
-HOW TO USE THIS CODE TO PUSH RNG FILES TO AXIOM
-
-Here's a quick 'how to' to use this code on a SeaSonde site.
-
-0) Create an ssh key and give the public key to Axiom. (In the instructions
-   below, the key name is 'id_axiom'. Use the name of your key on your site).
-   
-1) create an entry in ssh config file ```~/.ssh/config```
-```
-Host axiom
-Hostname data.axds.co
-IdentityFile /Users/codar/.ssh/id_axiom
-StrictHostKeyChecking accept-new
-User hfr_xxxx
-```
-
-2) download the bash file
-   Download the ```rsync_to_axiom.bash``` file, eg from:
-   https://github.com/rowg/axiom_rangeseries_archive/blob/master/rsync_to_axiom.bash
-
-   Put this in the site folder ```/Codar/SeaSonde/Apps/Scripts/```
-
-3) Add the script to the site crontab
-   Here's an example entry:
+To manually push a directory to the archive (backfill, etc) you may execute the sync script directly with the
+local path as the first argument and the remote path as the second argument.
 
 ```
-# Push to Axiom Data Sciences Archive
-# (this is every hour at 4 minutes after the hour)
-4 * * * * /Codar/SeaSonde/Apps/Scripts/rsync_to_axiom.bash
-
-# try to delete lock file once per day just in case
-30 23 * * * rm /tmp/axiom-sync.lock
+$HOME/range-series-sync.sh /path/to/local/dir Backfill/
 ```
 
+The `-n` flag can also be used to show the outcome of a sync without actually executing it (dry run).
+Note that the `-n` flag must come __before__ the paths in this case or it will be ignored!
 
-OTHER CODE
-
-```propagation_script.bash``` can be used to push ```rsync_to_axiom.bash``` to a list 
-of SeaSonde sites. The default is to copy the ssh key, the config, and to modify the 
-crontab. Use with caution. 
-
-```axiom_permission_setup.bash``` can be used to create the receiver directory and
-change its permission on the Axiom server for each radar site.
-
-
-NOTES
-
-CODAR officially suggests not using crontab, and instead using ```launchd```
-
-
-
-ACKNOWLEDGMENT
-
-
-
-VERSION NOTES
-
+```
+$HOME/range-series-sync.sh -n /path/to/local/dir Backfill/
+```
