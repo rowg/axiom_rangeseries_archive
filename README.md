@@ -13,8 +13,9 @@ providers do __not__ need to run or install the scripts in `archive_management_s
 
 * Communicate with the range series archive manager at Axiom to determine your sync SSH username
 * Download `bootstrap-range-series-archival.sh` from this repository (using a browser, or a
-  command line tool like `curl -sL "https://github.com/rowg/axiom_rangeseries_archive/blob/master/README.md" > $HOME/Downloads/bootstrap-range-series-archival.sh`)
-* Open a terminal and run the script using `bash` (example `bash $HOME/Downloads/bootstrap-range-series-archival.sh`)
+  command line tool like `curl -sL "https://github.com/rowg/axiom_rangeseries_archive/blob/master/bootstrap-range-series-archival.sh" > $HOME/Downloads/bootstrap-range-series-archival.sh`)
+* Open a terminal and run the script (as a normal user with read access to the SeaSonde data files, not `root`!)
+  using `bash` (example `bash $HOME/Downloads/bootstrap-range-series-archival.sh`)
 * Enter your SSH username determined in the first step when prompted
 * When the script completes, send the displayed public key to the Axiom range series archive manager (safe to send via email)
 * Add the displayed cron job to your crontab (`crontab -e` to open in an editor)

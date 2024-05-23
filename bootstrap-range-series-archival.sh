@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Bootstrap a CODAR SeaSonde site computer to send range series and configs
+# to the Axiom-managed range series archive using rsync.
+# Run this script as a normal user (not root!) to bootstrap.
+# See https://github.com/rowg/axiom_rangeseries_archive for usage details.
+
 SSH_KEY="${SSH_KEY:-${HOME}/.ssh/id_ed25519_range_series_archival}"
 RADIAL_CONFIGS_DIR="${RADIAL_CONFIGS_DIR:-/Codar/SeaSonde/Configs/RadialConfigs}"
 RADIAL_CONFIGS_HEADER="${RADIAL_CONFIGS_DIR}/Header.txt"
